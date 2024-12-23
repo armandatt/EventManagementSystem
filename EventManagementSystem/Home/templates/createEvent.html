@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9c4;  /* Dark purple background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666666d5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Create Event</h2>
+        <form name="register" method="post" action="{% url 'InsertEvent' %}">  <!-- Use URL routing -->
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="event_name">Event Name</label>
+                <input type="text" id="event_name" name="event_name" placeholder="Enter event name" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="start_date">Registration Start Date</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="end_date">Registration End Date</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="event_date">Event Date</label>
+                <input type="date" id="event_date" name="event_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="event_name">Event location</label>
+                <input type="text" id="event_name" name="event_location" placeholder="Enter event Location" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="fees">Event Fees/Put 0 if no Fees</label>
+                <input type="number" id="fees" name="fees" placeholder="Enter event fees" >
+            </div>
+    
+            <button type="submit" name="reg" class="btn-submit">Submit</button>
+        </form>
+        <p>Fill in the event details and submit</p>
+    </div>
+    
+
+</body>
+</html>

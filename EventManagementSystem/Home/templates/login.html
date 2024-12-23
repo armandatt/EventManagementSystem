@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 70vh;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .promo-content {
+            flex: 1;
+            background-color: #3a82f7;
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* text-decoration-color: white; */
+        }
+
+        .promo-content h2 {
+            color: white;
+        }
+
+        .promo-content p {
+            color: white;
+        }
+
+        .login-form {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .form-container h2{
+            padding: 7px;
+            margin-top: 4px;
+            margin-left: 30px;
+            margin-bottom: 0px;
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .form-container p{
+            margin-bottom: 30px;
+            padding: 7px;
+        }
+
+
+        .alert-popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+
+
+        .alert-popup {
+            max-width: 500px;
+            padding: 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .alert-popup.error {
+            background-color: #dc3545;
+
+        }
+
+        .alert-popup.success {
+            background-color: #28a745;
+        }
+
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #3a82f7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        button:hover {
+            background-color: #1e69d9;
+        }
+
+        .google-login {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="promo-content">
+            <h2>New Scheduling And Managing Options</h2>
+            <p>We also updated the format of event Registration and Accessing.</p>
+        </div>
+
+        <div class="alert-popup-container">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert-popup {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="login-form">
+            <div class="form-container">
+                <h2>Hello Again!</h2>
+                <p>Welcome back! Please enter your details to continue.</p>
+
+                <form name="user_login" method="POST" action="{% url 'CheckUser' %}">
+                    {% csrf_token %}
+                    <!-- Hidden field to pass the 'next' parameter -->
+                    <input type="hidden" name="next" value="{{ next }}">
+
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit">Login</button>
+                </form>
+
+                <p class="signup">Don’t have an account? <a href="http://127.0.0.1:8000/register">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+</html>

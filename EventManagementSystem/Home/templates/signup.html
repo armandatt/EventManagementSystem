@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 70vh;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            height: 70vh;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .promo-content {
+            flex: 1;
+            background-color: #3a82f7;
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* text-decoration-color: white; */
+        }
+
+        .promo-content h2 {
+            color: white;
+        }
+
+        .promo-content p {
+            color: white;
+        }
+
+        .login-form {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        /* Pop-up alert container */
+        .alert-popup-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+
+        /* Pop-up alert styling */
+        .alert-popup {
+            max-width: 500px;
+            padding: 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Error and Success colors */
+        .alert-popup.error {
+            background-color: #dc3545;
+            /* Red for error */
+        }
+
+        .alert-popup.success {
+            background-color: #28a745;
+            /* Green for success */
+        }
+
+        .logo {
+            width: 50px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            margin-top: 10px;
+            padding-top: 5px;
+        }
+
+        p {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .options a {
+            color: #3a82f7;
+            text-decoration: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #3a82f7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        button:hover {
+            background-color: #1e69d9;
+        }
+
+        .google-login {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .signup {
+            font-size: 0.85rem;
+        }
+
+        .signup a {
+            color: #3a82f7;
+            text-decoration: none;
+        }
+
+        .messages .message {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid;
+        }
+
+        .messages .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Side: Promotional Content -->
+        <div class="promo-content">
+            <h2>New Scheduling And Managing Options</h2>
+            <p>We also updated the format of event Registration and Accessing.</p>
+        </div>
+        <div class="alert-popup-container">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert-popup {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Login Form -->
+        <div class="login-form">
+            <div class="form-container">
+                <!-- <img src="logo.png" alt="Logo" class="logo"> -->
+                <h2>Hello Again!</h2>
+                <p>Welcome back! Please enter your details to continue.</p>
+                <form name="user_login" method="post" action="{% url 'CreateUser' %}">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <label for="email">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <!-- <div class="options">
+                        <label><input type="checkbox"> Remember Me</label>
+                        <a href="#">Recovery Password</a>
+                    </div> -->
+                    <button type="submit">Sign Up</button>
+                    <!-- <button type="button" class="google-login">Sign in with Google</button> -->
+                </form>
+                <p class="signup">Already have an account? <a href="http://127.0.0.1:8000/login">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

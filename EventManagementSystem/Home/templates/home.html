@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    {% load static %}
+    <style>
+        * {
+            /* margin: 0;
+            padding: 0; */
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #1c1c1c;
+            padding: 11px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff5c5c;
+            padding-left: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            margin-right: 20px;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+            padding: 10px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ff7878;
+            border-bottom: 2px solid #ff7878;
+        }
+
+        .hero {
+            background-image: url("{% static 'Home/concert_bg.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 88vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+
+            z-index: 1;
+        }
+
+        .hero h1,
+        .hero p {
+            color: #f4f4f4;
+
+            font-size: 2.5rem;
+            margin: 0;
+            z-index: 2;
+
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .cta-buttons {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-buttons a {
+            display: inline-block;
+            padding: 15px 30px;
+
+            margin-top: 55px;
+            margin-left: 18px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-buttons a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+
+        h2 {
+            text-align: center;
+            margin-top: 0px;
+            font-size: 2rem;
+        }
+
+
+        .featured-events {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .featured-events h2 {
+            font-size: 36px;
+        }
+
+        .event-cards {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .event-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+            text-align: left;
+            padding: 15px;
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .event-card h3 {
+            font-size: 20px;
+        }
+
+        .event-card p {
+            margin: 5px 0;
+        }
+
+        .event-management-tools {
+            padding: 50px 20px;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .event-management-tools h2 {
+            font-size: 36px;
+        }
+
+        .tools {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tool {
+            text-align: center;
+            padding: 20px;
+            width: 200px;
+        }
+
+        .testimonials {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            margin-top: 1px;
+            font-size: 36px;
+        }
+
+        .carousel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .testimonial {
+            width: 250px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .newsletter {
+            padding: 50px 20px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 36px;
+        }
+
+        .newsletter input {
+            padding: 10px;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .newsletter button {
+            padding: 10px 20px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        footer {
+            padding: 20px;
+            background-color: #222;
+            color: white;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ff6600;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Eventify</div>
+        <nav>
+            <ul>
+                <li><a href="http://127.0.0.1:8000/Home">Home</a></li>
+                <li><a href="About">About Us</a></li>
+                <li><a href="events">Events</a></li>
+                <li><a href="Contact">Contact</a></li>
+                <li><a href="login">Login</a></li>
+                <!-- <li><a href="createEvent">Create Event</a></li> -->
+                {% if request.session.is_logged_in %}
+                    <li><a href="{% url 'logout_user' %}">Logout</a></li>
+                {% endif %}             
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Plan Your Perfect Event with Us!</h1>
+        <p>Find, Create, and Manage Events Easily.</p>
+        <div class="cta-buttons">
+            <a href="events">Find Events</a>
+            {% if request.session.is_admin %}
+                <a href="createEvent">Create Event</a>
+            {% endif %}
+        </div>
+    </section>
+
+
+    <section class="featured-events">
+        <h2>Upcoming Events</h2>
+        <div class="event-cards">
+            <div class="event-card">
+                {% load static %}
+                <img src='{% static "Home/music_festival.jpg" %}' alt="Event 1"> <!-- Replace with actual image -->
+                <h3>Music Festival!!</h3>
+                <p>Date: October 20, 2024</p>
+                <p>Location: Below C5 Hostel</p>
+                <a href="#">Learn More</a>
+            </div>
+            <div class="event-card">
+                {% load static %}
+                <img src='{% static "Home/buisness.jpg" %}' alt="Event 2"> <!-- Replace with actual image -->
+                <h3>StartUp Pitches!!</h3>
+                <p>Date: November 10, 2024</p>
+                <p>Location: Hatchery 3rd floor A block</p>
+                <a href="#">Learn More</a>
+            </div>
+            <div class="event-card">
+                {% load static %}
+                <img src='{% static "Home/dandiya.jpg" %}' alt="Event 2"> <!-- Replace with actual image -->
+                <h3>Garbha Nights!!</h3>
+                <p>Date: october 18, 2024</p>
+                <p>Location: German Hanger</p>
+                <a href="#">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="event-management-tools">
+        <h2>Manage Your Events</h2>
+        <div class="tools">
+            <div class="tool">
+                <img src='{% static "Home/schedule.png" %}' alt="Event Scheduling" style="width: 80px;">
+                <h3>Event Scheduling</h3>
+                <p>Plan and organize your events efficiently.</p>
+            </div>
+            <div class="tool">
+                <img src='{% static "Home/ticket.png" %}' alt="Ticketing" style="width: 80px;">
+                <h3>Ticketing</h3>
+                <p>Sell tickets online and manage attendees.</p>
+            </div>
+            <div class="tool">
+                <img src='{% static "Home/budget.png" %}' alt="Budgeting" style="width: 80px;">
+                <h3>Budgeting</h3>
+                <p>Track and manage your event expenses.</p>
+            </div>
+            <div class="tool">
+                <img src='{% static "Home/location.png" %}' alt="Venue Management" style="width: 80px;">
+                <h3>Venue Management</h3>
+                <p>Find and book the perfect venue.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div class="carousel">
+            <div class="testimonial">
+                <p>"Eventify made organizing our wedding so easy and stress-free!"</p>
+                <p>- Sarah & John</p>
+            </div>
+            <div class="testimonial">
+                <p>"Our business conference was a huge success thanks to Eventify."</p>
+                <p>- Tech Corp</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="newsletter">
+        <h2>Stay Updated</h2>
+        <input type="email" placeholder="Enter your email">
+        <button>Subscribe</button>
+    </section>
+
+
+    <footer>
+        <p>&copy; 2024 Eventify. All rights reserved.</p>
+        <p><a href="#">Home</a> | <a href="#">About Us</a> | <a href="#">Contact</a></p>
+        <p>Follow us on
+            <a href="#">Facebook</a>,
+            <a href="#">Twitter</a>,
+            <a href="https://www.instagram.com/akshar.3110/">Instagram</a>
+        </p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Deleted Successfully</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .success-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .success-container h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .success-container .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button-group a {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-group a:hover {
+            background-color: #0056b3;
+        }
+
+        .button-group a.secondary {
+            background-color: #6c757d;
+        }
+
+        .button-group a.secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 20px;
+            }
+
+            .success-container h1 {
+                font-size: 24px;
+            }
+
+            .success-container p {
+                font-size: 16px;
+            }
+
+            .button-group a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-container">
+        <h1>Event Deleted Successfully!</h1>
+        <p>Your event has been Deleted. What would you like to do next?</p>
+        <div class="button-group">
+            <a href="/Home" class="secondary">Return to Home</a>
+            <a href="http://127.0.0.1:8000/Home/events" class="primary">Delete Another Event</a>
+        </div>
+    </div>
+
+</body>
+</html>

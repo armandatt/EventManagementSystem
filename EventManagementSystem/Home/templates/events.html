@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Event List with Details</title>
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #1c1c1c;
+            color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #262626;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading */
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            color: #e1b12c;
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(3);
+            /* 3 cards per row */
+            gap: 20px;
+            /* Space between cards */
+        }
+
+        /* Event Card */
+        .event-card {
+            background-color: #333;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Space between content and button */
+            height: 100%;
+            /* Ensures all cards take up the same vertical space */
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .event-card h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #e1b12c;
+            margin-bottom: 10px;
+        }
+
+        .event-card p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            font-size: 1.2rem;
+            color: #dcdcdc;
+        }
+
+        .event-card .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+
+        }
+
+        .btn-detail {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #e1b12c;
+            color: #1c1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            display: inline-block;
+            /* Change to inline-block to fit content size */
+            width: auto;
+            /* Optional: let the button width adjust to content */
+            align-self: center;
+            text-size-adjust: 5px;
+            font-weight: bold;
+
+
+            /* Center the button within the card */
+        }
+
+        .btn-details {
+            padding: 10px 20px;
+            margin-top: 15px;
+            background-color: #e1b12c;
+            color: #1c1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            display: inline-block;
+            /* Change to inline-block to fit content size */
+            width: auto;
+            /* Optional: let the button width adjust to content */
+            align-self: center;
+            font-weight: bold;
+
+        }
+
+        .btn-details:hover {
+            background-color: #fbc531;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            color: #f5f5f5;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #f5f5f5;
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            color: #e1b12c;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Register Button */
+        .btn-register {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #fbc531;
+            color: #1c1c1c;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-register:hover {
+            background-color: #e1b12c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Upcoming Events</h1>
+        <div class="events-grid">
+            {% for us in eventData %}
+            <div class="event-card">
+                <h2>{{ us.event_name }}</h2>
+                <p><strong>Date:</strong> {{ us.event_date }}</p>
+                <p><strong>Location:</strong> {{ us.event_location }}</p>
+                <div class="btn-container">
+                    {% if request.session.is_admin %}
+                    <a href="{% url 'DeleteEvent' us.event_id %}" class="btn-details">Delete Event</a>
+                    {% endif %}
+                    <button class="btn-details"
+                        onclick="openModal('{{ us.event_name }}', '{{ us.start_date }}', '{{ us.end_date }}', '{{ us.event_date }}', '{{ us.event_location }}', '{{ us.fees }}', '{{ us.event_id }}', this.dataset.registered)"
+                        data-registered="{{ us.user_registered|yesno:'true,false' }}">
+                        View Details
+                    </button>
+                    {% if request.session.is_admin %}
+                    <a href="{% url 'UpdateEvent' us.event_id %}" class="btn-details">Update Event</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-event-name"></h2>
+            <p><strong>Registration Start Date:</strong> <span id="modal-start-date"></span></p>
+            <p><strong>Registration End Date:</strong> <span id="modal-end-date"></span></p>
+            <p><strong>Event Date:</strong> <span id="modal-event-date"></span></p>
+            <p><strong>Event Location:</strong> <span id="modal-event-location"></span></p>
+            <p><strong>Fees:</strong> <span id="modal-fees"></span></p>
+            <!-- Registration form for direct submission -->
+            <form id="registration-form" method="POST" action="">
+                {% csrf_token %}
+                <button type="submit" id="register-button" class="btn-register">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(eventName, startDate, endDate, eventDate, eventLocation, fees, id, isRegistered) {
+            // Set modal content
+            document.getElementById("modal-event-name").innerText = eventName;
+            document.getElementById("modal-start-date").innerText = startDate;
+            document.getElementById("modal-end-date").innerText = endDate;
+            document.getElementById("modal-event-date").innerText = eventDate;
+            document.getElementById("modal-event-location").innerText = eventLocation;
+            document.getElementById("modal-fees").innerText = fees == 0.00 ? "Free" : fees;
+
+            // Set the form action URL for registration
+            document.getElementById("registration-form").action = `/register_for_event/${id}/`;
+
+            // Update button based on registration status
+            const registerButton = document.getElementById("register-button");
+            if (isRegistered === "true") {
+                registerButton.innerText = "Registered";
+                registerButton.style.backgroundColor = "green";
+                registerButton.disabled = true;
+            } else {
+                registerButton.innerText = "Register";
+                registerButton.style.backgroundColor = "";
+                registerButton.disabled = false;
+            }
+
+            // Show the modal
+            document.getElementById("eventModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("eventModal").style.display = "none";
+        }
+    </script>
+</body>
+
